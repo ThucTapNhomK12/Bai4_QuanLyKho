@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="db_warehouse_management_simpleModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="hang_hoa">
+    <Key>
+      <PropertyRef Name="ma_hang_hoa" />
+    </Key>
+    <Property Name="ma_hang_hoa" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ten_hang_hoa" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="so_luong" Type="Int32" Nullable="false" />
+    <Property Name="don_gia" Type="Double" Nullable="false" />
+    <Property Name="ma_nha_cung_cap" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="nha_cung_cap" Relationship="Self.FK__hang_hoa__ma_nha__182C9B23" FromRole="hang_hoa" ToRole="nha_cung_cap" />
+    <NavigationProperty Name="hang_nhap" Relationship="Self.FK__hang_nhap__ma_ha__1A14E395" FromRole="hang_hoa" ToRole="hang_nhap" />
+    <NavigationProperty Name="hang_xuat" Relationship="Self.FK__hang_xuat__ma_ha__1CF15040" FromRole="hang_hoa" ToRole="hang_xuat" />
+  </EntityType>
+  <EntityType Name="hang_nhap">
+    <Key>
+      <PropertyRef Name="ma_nhap" />
+    </Key>
+    <Property Name="ma_nhap" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ngay_nhap" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="don_gia" Type="Double" Nullable="false" />
+    <Property Name="so_luong" Type="Int32" Nullable="false" />
+    <Property Name="ma_hang_hoa" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="hang_hoa" Relationship="Self.FK__hang_nhap__ma_ha__1A14E395" FromRole="hang_nhap" ToRole="hang_hoa" />
+  </EntityType>
+  <EntityType Name="hang_xuat">
+    <Key>
+      <PropertyRef Name="ma_xuat" />
+    </Key>
+    <Property Name="ma_xuat" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ngay_xuat" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="don_gia" Type="Double" Nullable="false" />
+    <Property Name="so_luong" Type="Int32" Nullable="false" />
+    <Property Name="ma_hang_hoa" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="hang_hoa" Relationship="Self.FK__hang_xuat__ma_ha__1CF15040" FromRole="hang_xuat" ToRole="hang_hoa" />
+  </EntityType>
+  <EntityType Name="nha_cung_cap">
+    <Key>
+      <PropertyRef Name="ma_nha_cung_cap" />
+    </Key>
+    <Property Name="ma_nha_cung_cap" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ten_nha_cung_cap" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="dia_chi" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="so_dien_thoai" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="hang_hoa" Relationship="Self.FK__hang_hoa__ma_nha__182C9B23" FromRole="nha_cung_cap" ToRole="hang_hoa" />
+  </EntityType>
+  <EntityType Name="tai_khoan">
+    <Key>
+      <PropertyRef Name="tai_khoan1" />
+    </Key>
+    <Property Name="tai_khoan1" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="mat_khau" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__hang_hoa__ma_nha__182C9B23">
+    <End Role="nha_cung_cap" Type="Self.nha_cung_cap" Multiplicity="1" />
+    <End Role="hang_hoa" Type="Self.hang_hoa" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="nha_cung_cap">
+        <PropertyRef Name="ma_nha_cung_cap" />
+      </Principal>
+      <Dependent Role="hang_hoa">
+        <PropertyRef Name="ma_nha_cung_cap" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__hang_nhap__ma_ha__1A14E395">
+    <End Role="hang_hoa" Type="Self.hang_hoa" Multiplicity="1" />
+    <End Role="hang_nhap" Type="Self.hang_nhap" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="hang_hoa">
+        <PropertyRef Name="ma_hang_hoa" />
+      </Principal>
+      <Dependent Role="hang_nhap">
+        <PropertyRef Name="ma_hang_hoa" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__hang_xuat__ma_ha__1CF15040">
+    <End Role="hang_hoa" Type="Self.hang_hoa" Multiplicity="1" />
+    <End Role="hang_xuat" Type="Self.hang_xuat" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="hang_hoa">
+        <PropertyRef Name="ma_hang_hoa" />
+      </Principal>
+      <Dependent Role="hang_xuat">
+        <PropertyRef Name="ma_hang_hoa" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="db_warehouse_managementEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="hang_hoa" EntityType="Self.hang_hoa" />
+    <EntitySet Name="hang_nhap" EntityType="Self.hang_nhap" />
+    <EntitySet Name="hang_xuat" EntityType="Self.hang_xuat" />
+    <EntitySet Name="nha_cung_cap" EntityType="Self.nha_cung_cap" />
+    <EntitySet Name="tai_khoan" EntityType="Self.tai_khoan" />
+    <AssociationSet Name="FK__hang_hoa__ma_nha__182C9B23" Association="Self.FK__hang_hoa__ma_nha__182C9B23">
+      <End Role="nha_cung_cap" EntitySet="nha_cung_cap" />
+      <End Role="hang_hoa" EntitySet="hang_hoa" />
+    </AssociationSet>
+    <AssociationSet Name="FK__hang_nhap__ma_ha__1A14E395" Association="Self.FK__hang_nhap__ma_ha__1A14E395">
+      <End Role="hang_hoa" EntitySet="hang_hoa" />
+      <End Role="hang_nhap" EntitySet="hang_nhap" />
+    </AssociationSet>
+    <AssociationSet Name="FK__hang_xuat__ma_ha__1CF15040" Association="Self.FK__hang_xuat__ma_ha__1CF15040">
+      <End Role="hang_hoa" EntitySet="hang_hoa" />
+      <End Role="hang_xuat" EntitySet="hang_xuat" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,32 @@
+c:\users\naq259\documents\visual studio 2013\Projects\WarehouseManagement\WarehouseManagement\bin\Debug\WarehouseManagement.exe.config
+C:\Users\naq259\documents\visual studio 2013\Projects\WarehouseManagement\WarehouseManagement\bin\Debug\WarehouseManagement.exe
+C:\Users\naq259\documents\visual studio 2013\Projects\WarehouseManagement\WarehouseManagement\bin\Debug\WarehouseManagement.pdb
+C:\Users\naq259\documents\visual studio 2013\Projects\WarehouseManagement\WarehouseManagement\bin\Debug\EntityFramework.dll
+C:\Users\naq259\documents\visual studio 2013\Projects\WarehouseManagement\WarehouseManagement\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\naq259\documents\visual studio 2013\Projects\WarehouseManagement\WarehouseManagement\bin\Debug\EntityFramework.xml
+C:\Users\naq259\documents\visual studio 2013\Projects\WarehouseManagement\WarehouseManagement\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\naq259\documents\visual studio 2013\Projects\WarehouseManagement\WarehouseManagement\obj\Debug\WarehouseManagement.csprojResolveAssemblyReference.cache
+C:\Users\naq259\documents\visual studio 2013\Projects\WarehouseManagement\WarehouseManagement\obj\Debug\WarehouseManagement.DangNhap.resources
+C:\Users\naq259\documents\visual studio 2013\Projects\WarehouseManagement\WarehouseManagement\obj\Debug\WarehouseManagement.Properties.Resources.resources
+C:\Users\naq259\documents\visual studio 2013\Projects\WarehouseManagement\WarehouseManagement\obj\Debug\WarehouseManagement.QuanLy.resources
+C:\Users\naq259\documents\visual studio 2013\Projects\WarehouseManagement\WarehouseManagement\obj\Debug\WarehouseManagement.csproj.GenerateResource.Cache
+C:\Users\naq259\documents\visual studio 2013\Projects\WarehouseManagement\WarehouseManagement\obj\Debug\WarehouseManagement.exe
+C:\Users\naq259\documents\visual studio 2013\Projects\WarehouseManagement\WarehouseManagement\obj\Debug\WarehouseManagement.pdb
+C:\Users\naq259\Documents\Visual Studio 2013\Projects\warehouse_management_simple\WarehouseManagement\WarehouseManagement\bin\Debug\WarehouseManagement.exe.config
+C:\Users\naq259\Documents\Visual Studio 2013\Projects\warehouse_management_simple\WarehouseManagement\WarehouseManagement\obj\Debug\WarehouseManagement.exe
+C:\Users\naq259\Documents\Visual Studio 2013\Projects\warehouse_management_simple\WarehouseManagement\WarehouseManagement\obj\Debug\WarehouseManagement.pdb
+C:\Users\naq259\Documents\Visual Studio 2013\Projects\warehouse_management_simple\WarehouseManagement\WarehouseManagement\obj\Debug\WarehouseManagement.csprojResolveAssemblyReference.cache
+C:\Users\naq259\Documents\Visual Studio 2013\Projects\warehouse_management_simple\WarehouseManagement\WarehouseManagement\obj\Debug\WarehouseManagement.DangNhap.resources
+C:\Users\naq259\Documents\Visual Studio 2013\Projects\warehouse_management_simple\WarehouseManagement\WarehouseManagement\obj\Debug\WarehouseManagement.HangHoaForm.resources
+C:\Users\naq259\Documents\Visual Studio 2013\Projects\warehouse_management_simple\WarehouseManagement\WarehouseManagement\obj\Debug\WarehouseManagement.Properties.Resources.resources
+C:\Users\naq259\Documents\Visual Studio 2013\Projects\warehouse_management_simple\WarehouseManagement\WarehouseManagement\obj\Debug\WarehouseManagement.QuanLy.resources
+C:\Users\naq259\Documents\Visual Studio 2013\Projects\warehouse_management_simple\WarehouseManagement\WarehouseManagement\obj\Debug\WarehouseManagement.csproj.GenerateResource.Cache
+C:\Users\naq259\Documents\Visual Studio 2013\Projects\warehouse_management_simple\WarehouseManagement\WarehouseManagement\bin\Debug\WarehouseManagement.exe
+C:\Users\naq259\Documents\Visual Studio 2013\Projects\warehouse_management_simple\WarehouseManagement\WarehouseManagement\bin\Debug\WarehouseManagement.pdb
+C:\Users\naq259\Documents\Visual Studio 2013\Projects\warehouse_management_simple\WarehouseManagement\WarehouseManagement\bin\Debug\EntityFramework.dll
+C:\Users\naq259\Documents\Visual Studio 2013\Projects\warehouse_management_simple\WarehouseManagement\WarehouseManagement\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\naq259\Documents\Visual Studio 2013\Projects\warehouse_management_simple\WarehouseManagement\WarehouseManagement\bin\Debug\EntityFramework.xml
+C:\Users\naq259\Documents\Visual Studio 2013\Projects\warehouse_management_simple\WarehouseManagement\WarehouseManagement\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\naq259\Desktop\WarehouseManagement\WarehouseManagement\bin\Debug\WarehouseManagement.exe.config
+C:\Users\naq259\Desktop\WarehouseManagement\WarehouseManagement\obj\Debug\WarehouseManagement.exe
+C:\Users\naq259\Desktop\WarehouseManagement\WarehouseManagement\obj\Debug\WarehouseManagement.pdb
