@@ -62,6 +62,66 @@ namespace WarehouseManagement
             dgvHangHoa.DataSource = new db_warehouse_managementEntities().hang_hoa.ToList();
         }
 
+        private void cbProductAction_SelectedValueChanged(object sender, EventArgs e)
+        {
+            string selectedAction = cbProductAction.SelectedValue.ToString();
+            switch (selectedAction)
+            {
+                case "create":
+                    selectedProduct = null;
+                    HangHoaForm form = new HangHoaForm();
+                    form.ShowDialog(this);
+                    refresh();
+                    break;
+                case "update":
+                    if (selectedProduct == null)
+                    {
+                        MessageBox.Show("Chọn bản ghi cần sửa!", "Thông báo", MessageBoxButtons.OK);
+                        refresh();
+                        return;
+                    }
+                    else
+                    {
+                        HangHoaForm x = new HangHoaForm();
+                        x.ShowDialog(this);
+                        refresh();
+                    }
+                    break;
+                case "delete":
+                    try
+                    {
+                        if (selectedProduct == null)
+                        {
+                            MessageBox.Show("Chọn bản ghi cần xóa!", "Thông báo", MessageBoxButtons.OK);
+                            refresh();
+                            return;
+                        }
+                        else
+                        {
+                            if (db.hang_nhap.Where(x => x.ma_hang_hoa == selectedProduct.ma_hang_hoa).ToList().Count > 0 ||
+                                db.hang_xuat.Where(x => x.ma_hang_hoa == selectedProduct.ma_hang_hoa).ToList().Count > 0)
+                            {
+                                MessageBox.Show("Hàng hóa này liên quan đến nhiều dữ liệu khác, không thể xóa!", "Chúc mừng", MessageBoxButtons.OK);
+                                return;
+                            }
+                            if (MessageBox.Show(null, "Bạn có chắc chắn muốn xóa không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
+                            {
+                                db.hang_hoa.Remove(selectedProduct);
+                                db.SaveChanges();
+                                refresh();
+                                MessageBox.Show("Xóa dữ liệu thành công!", "Chúc mừng", MessageBoxButtons.OK);
+                            }
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Xóa thất bại", "Lỗi", MessageBoxButtons.OK);
+                    }
+                    break;
+            }
+        }
+
+
 
         // end Huong
         public void loadSearchView()
