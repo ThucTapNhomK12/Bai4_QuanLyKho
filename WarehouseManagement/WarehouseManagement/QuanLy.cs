@@ -121,6 +121,36 @@ namespace WarehouseManagement
             }
         }
 
+        private void dgvHangHoa_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (this.dgvHangHoa.Columns[e.ColumnIndex].Name == "nha_cung_cap")
+            {
+                if (e.Value != null)
+                {
+                    nha_cung_cap supplier = db.nha_cung_cap.Find(e.Value);
+                    e.Value = supplier.ten_nha_cung_cap;
+                }
+            }
+            if (this.dgvHangHoa.Columns[e.ColumnIndex].Name == "don_gia")
+            {
+                if (e.Value != null)
+                {
+                    e.Value = String.Format("{0:0,0}", e.Value);
+                }
+            }
+        }
+
+        private void dgvHangHoa_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            try
+            {
+                selectedProduct = db.hang_hoa.Find(dgvHangHoa.Rows[e.RowIndex].Cells[0].Value);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Click chuột sai vị trí", "Lỗi", MessageBoxButtons.OK);
+            }
+        }
 
 
         // end Huong
