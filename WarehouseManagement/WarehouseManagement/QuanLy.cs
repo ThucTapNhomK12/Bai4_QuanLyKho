@@ -43,6 +43,27 @@ namespace WarehouseManagement
             loadStatistic();
         }
 
+
+
+        // Huong_code Hang hoa
+        public void loadHangHoa()
+        {
+            selectedProduct = null;
+            List<ActionForm> listAction = new List<ActionForm>()
+            {
+                new ActionForm("choose", "Chọn thao tác"),
+                new ActionForm("create", "Thêm sản phẩm"),
+                new ActionForm("update", "Sửa thông tin"),
+                new ActionForm("delete", "Xóa sản phẩm")
+            };
+            cbProductAction.DataSource = listAction;
+            cbProductAction.DisplayMember = "action";
+            cbProductAction.ValueMember = "key";
+            dgvHangHoa.DataSource = new db_warehouse_managementEntities().hang_hoa.ToList();
+        }
+
+
+        // end Huong
         public void loadSearchView()
         {
             List<ActionForm> listAction = new List<ActionForm>()
@@ -109,6 +130,8 @@ namespace WarehouseManagement
             }
 
         }
+
+
 
         public void loadStatistic()
         {
