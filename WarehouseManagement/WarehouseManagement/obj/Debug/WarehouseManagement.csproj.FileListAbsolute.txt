@@ -31,3 +31,4 @@ C:\Users\naq259\Desktop\WarehouseManagement\WarehouseManagement\bin\Debug\Wareho
 C:\Users\naq259\Desktop\WarehouseManagement\WarehouseManagement\obj\Debug\WarehouseManagement.exe
 C:\Users\naq259\Desktop\WarehouseManagement\WarehouseManagement\obj\Debug\WarehouseManagement.pdb
 E:\Ky8\Source_code_GIT\Bai4_QuanLyKho\WarehouseManagement\WarehouseManagement\bin\Debug\WarehouseManagement.exe.config
+D:\ThucTapNhomK12\Bai4_QuanLyKhoSach\WarehouseManagement\WarehouseManagement\bin\Debug\WarehouseManagement.exe.config

@@ -341,6 +341,167 @@ namespace WarehouseManagement
             db.SaveChanges();
             MessageBox.Show("Thay đổi mật khẩu thành công!", "Thông báo", MessageBoxButtons.OK);
         }
+        #region Long
+        public void loadHangNhap()
+        {
+            dgvNhapHang.DataSource = db.hang_nhap.ToList();
+            btnThemHangNhap.Enabled = true;
+            btnSuaHangNhap.Enabled = false;
+            btnXoaHangNhap.Enabled = false;
+            btnLuuHangNhap.Enabled = false;
+            btnHuyHangNhap.Enabled = false;
 
+            cbHangHoaNhap.Enabled = false;
+            txtSoLuongNhap.Enabled = false;
+            txtSoLuongNhap.Text = null;
+            cbHangHoaNhap.DataSource = db.hang_hoa.ToList();
+            cbHangHoaNhap.DisplayMember = "ten_hang_hoa";
+            cbHangHoaNhap.ValueMember = "ma_hang_hoa";
+        }
+
+        public void loadHangXuat()
+        {
+            dgvXuatHang.DataSource = db.hang_xuat.ToList();
+            btnThemHangXuat.Enabled = true;
+            btnSuaHangXuat.Enabled = false;
+            btnXoaHangXuat.Enabled = false;
+            btnLuuHangXuat.Enabled = false;
+            btnHuyHangXuat.Enabled = false;
+
+            cbHangHoaXuat.Enabled = false;
+            txtSoLuongXuat.Enabled = false;
+            txtSoLuongXuat.Text = null;
+            cbHangHoaXuat.DataSource = db.hang_hoa.ToList();
+            cbHangHoaXuat.DisplayMember = "ten_hang_hoa";
+            cbHangHoaXuat.ValueMember = "ma_hang_hoa";
+        }
+
+        private void btnThemHangNhap_Click(object sender, EventArgs e)
+        {
+            btnThemHangNhap.Enabled = true;
+            btnSuaHangNhap.Enabled = false;
+            btnXoaHangNhap.Enabled = false;
+            btnLuuHangNhap.Enabled = true;
+            btnHuyHangNhap.Enabled = true;
+
+            cbHangHoaNhap.Enabled = true;
+            txtSoLuongNhap.Enabled = true;
+            txtSoLuongNhap.Text = null;
+
+            selectedCoupon = null;
+        }
+
+        private void btnHuyHangNhap_Click(object sender, EventArgs e)
+        {
+            refresh();
+        }
+
+        private void dgvNhapHang_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            try
+            {
+                btnThemHangNhap.Enabled = true;
+                btnSuaHangNhap.Enabled = true;
+                btnXoaHangNhap.Enabled = true;
+                btnLuuHangNhap.Enabled = false;
+                btnHuyHangNhap.Enabled = false;
+
+                selectedCoupon = db.hang_nhap.Find(int.Parse(dgvNhapHang.CurrentRow.Cells["ma_nhap"].Value.ToString()));
+                cbHangHoaNhap.SelectedValue = selectedCoupon.ma_hang_hoa;
+                txtSoLuongNhap.Text = selectedCoupon.so_luong.ToString();
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Click chuột sai vị trí", "Lỗi", MessageBoxButtons.OK);
+            }
+        }
+
+        private void btnSuaHangNhap_Click(object sender, EventArgs e)
+        {
+            btnThemHangNhap.Enabled = false;
+            btnSuaHangNhap.Enabled = true;
+            btnXoaHangNhap.Enabled = false;
+            btnLuuHangNhap.Enabled = true;
+            btnHuyHangNhap.Enabled = true;
+
+            cbHangHoaNhap.Enabled = true;
+            txtSoLuongNhap.Enabled = true;
+        }
+
+        private void btnXoaHangNhap_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (MessageBox.Show(null, "Bạn có chắc chắn muốn xóa không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
+                {
+                    db.hang_nhap.Remove(selectedCoupon);
+                    db.SaveChanges();
+                    MessageBox.Show("Xóa dữ liệu thành công!", "Chúc mừng", MessageBoxButtons.OK);
+                    refresh();
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Xóa thất bại", "Lỗi", MessageBoxButtons.OK);
+            }
+        }
+
+        private void btnLuuHangNhap_Click(object sender, EventArgs e)
+        {
+            if (txtSoLuongNhap.Value <= 0)
+            {
+                MessageBox.Show("Số lượng phải là số nguyên dương!", "Thông báo", MessageBoxButtons.OK);
+                return;
+            }
+            if (selectedCoupon == null)
+            {
+                hang_hoa product = db.hang_hoa.Find(int.Parse(cbHangHoaNhap.SelectedValue.ToString()));
+                hang_nhap entity = new hang_nhap();
+                entity.ngay_nhap = DateTime.Now;
+                entity.don_gia = product.don_gia;
+                entity.so_luong = txtSoLuongNhap.Value;
+                entity.ma_hang_hoa = product.ma_hang_hoa;
+                db.hang_nhap.Add(entity);
+                db.SaveChanges();
+                //Cập nhật số lượng hàng hóa
+                product.so_luong += entity.so_luong;
+                db.SaveChanges();
+                MessageBox.Show("Thêm dữ liệu thành công!", "Thông báo", MessageBoxButtons.OK);
+            }
+            else
+            {
+                hang_hoa product = db.hang_hoa.Find(int.Parse(cbHangHoaNhap.SelectedValue.ToString()));
+                //Cập nhật số lượng hàng hóa
+                product.so_luong = product.so_luong - selectedCoupon.so_luong + txtSoLuongNhap.Value;
+                db.SaveChanges();
+                selectedCoupon.ngay_nhap = DateTime.Now;
+                selectedCoupon.don_gia = product.don_gia;
+                selectedCoupon.so_luong = txtSoLuongNhap.Value;
+                db.SaveChanges();
+                MessageBox.Show("Sửa dữ liệu thành công!", "Thông báo", MessageBoxButtons.OK);
+            }
+            refresh();
+        }
+
+        private void dgvNhapHang_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (this.dgvNhapHang.Columns[e.ColumnIndex].Name == "tong_tien_nhap")
+            {
+                e.Value = double.Parse(dgvNhapHang.Rows[e.RowIndex].Cells["gia_nhap"].Value.ToString()) * int.Parse(dgvNhapHang.Rows[e.RowIndex].Cells["so_luong_nhap"].Value.ToString());
+                e.Value = String.Format("{0:0,0}", e.Value);
+            }
+            if (this.dgvNhapHang.Columns[e.ColumnIndex].Name == "gia_nhap")
+            {
+                e.Value = String.Format("{0:0,0}", e.Value);
+            }
+            if (this.dgvNhapHang.Columns[e.ColumnIndex].Name == "ma_hang_hoa_nhap")
+            {
+                e.Value = db.hang_hoa.Find(e.Value).ten_hang_hoa;
+            }
+        }
+
+
+        #endregion
     }
 }
