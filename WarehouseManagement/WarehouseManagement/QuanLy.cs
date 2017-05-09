@@ -43,6 +43,140 @@ namespace WarehouseManagement
             loadStatistic();
         }
 
+        public void loadNhaCungCap()
+        {
+            dgvNhaCungCap.DataSource = db.nha_cung_cap.ToList();
+            btnThemNCC.Enabled = true;
+            btnSuaNCC.Enabled = false;
+            btnXoaNCC.Enabled = false;
+            btnSaveNCC.Enabled = false;
+            btnCancelNCC.Enabled = false;
+            txtTenNhaCungCap.Enabled = false;
+            txtDiaChi.Enabled = false;
+            txtSoDienThoai.Enabled = false;
+            txtMaNCC.Text = null;
+            txtTenNhaCungCap.Text = null;
+            txtDiaChi.Text = null;
+            txtSoDienThoai.Text = null;
+        }
+
+        private void btnThemNCC_Click(object sender, EventArgs e)
+        {
+            txtTenNhaCungCap.Enabled = true;
+            txtDiaChi.Enabled = true;
+            txtSoDienThoai.Enabled = true;
+            txtMaNCC.Text = null;
+            txtTenNhaCungCap.Text = null;
+            txtDiaChi.Text = null;
+            txtSoDienThoai.Text = null;
+
+            btnThemNCC.Enabled = true;
+            btnSuaNCC.Enabled = false;
+            btnXoaNCC.Enabled = false;
+            btnSaveNCC.Enabled = true;
+            btnCancelNCC.Enabled = true;
+        }
+
+        private void btnCancelNCC_Click(object sender, EventArgs e)
+        {
+            refresh();
+        }
+
+        private void btnSuaNCC_Click(object sender, EventArgs e)
+        {
+            txtTenNhaCungCap.Enabled = true;
+            txtDiaChi.Enabled = true;
+            txtSoDienThoai.Enabled = true;
+
+            btnThemNCC.Enabled = false;
+            btnSuaNCC.Enabled = true;
+            btnXoaNCC.Enabled = false;
+            btnSaveNCC.Enabled = true;
+            btnCancelNCC.Enabled = true;
+        }
+
+        private void dgvNhaCungCap_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            try
+            {
+                txtMaNCC.Text = dgvNhaCungCap.Rows[e.RowIndex].Cells[0].Value.ToString();
+                txtTenNhaCungCap.Text = dgvNhaCungCap.Rows[e.RowIndex].Cells[1].Value.ToString();
+                txtDiaChi.Text = dgvNhaCungCap.Rows[e.RowIndex].Cells[2].Value.ToString();
+                txtSoDienThoai.Text = dgvNhaCungCap.Rows[e.RowIndex].Cells[3].Value.ToString();
+
+                btnThemNCC.Enabled = true;
+                btnSuaNCC.Enabled = true;
+                btnXoaNCC.Enabled = true;
+                btnSaveNCC.Enabled = false;
+                btnCancelNCC.Enabled = false;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Click chuột sai vị trí", "Lỗi", MessageBoxButtons.OK);
+            }
+        }
+
+        private void btnSaveNCC_Click(object sender, EventArgs e)
+        {
+            if (txtTenNhaCungCap.Text.Length <= 0 || txtDiaChi.Text.Length <= 0)
+            {
+                MessageBox.Show("Yêu cầu nhập đầy đủ thông tin!", "Thông báo", MessageBoxButtons.OK);
+                return;
+            }
+            try
+            {
+                double phone_number = double.Parse(txtSoDienThoai.Text);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Số điện thoại phải là số!", "Thông báo", MessageBoxButtons.OK);
+                return;
+            }
+            if (txtMaNCC.Text.Length <= 0)
+            {
+                nha_cung_cap entity = new nha_cung_cap();
+                entity.ten_nha_cung_cap = txtTenNhaCungCap.Text;
+                entity.dia_chi = txtDiaChi.Text;
+                entity.so_dien_thoai = txtSoDienThoai.Text;
+                db.nha_cung_cap.Add(entity);
+                db.SaveChanges();
+                MessageBox.Show("Thêm dữ liệu thành công!", "Thông báo", MessageBoxButtons.OK);
+            }
+            else
+            {
+                nha_cung_cap entity = db.nha_cung_cap.Find(int.Parse(txtMaNCC.Text));
+                entity.ten_nha_cung_cap = txtTenNhaCungCap.Text;
+                entity.dia_chi = txtDiaChi.Text;
+                entity.so_dien_thoai = txtSoDienThoai.Text;
+                db.SaveChanges();
+                MessageBox.Show("Sửa thông tin thành công!", "Thông báo", MessageBoxButtons.OK);
+            }
+            refresh();
+        }
+
+        private void btnXoaNCC_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                nha_cung_cap entity = db.nha_cung_cap.Find(int.Parse(txtMaNCC.Text));
+                if (db.hang_hoa.Where(x => x.ma_nha_cung_cap == entity.ma_nha_cung_cap).ToList().Count > 0)
+                {
+                    MessageBox.Show("Nhà cung cấp này liên quan đến nhiều dữ liệu khác, không thể xóa!", "Chúc mừng", MessageBoxButtons.OK);
+                    return;
+                }
+                if (MessageBox.Show(null, "Bạn có chắc chắn muốn xóa không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
+                {
+                    db.nha_cung_cap.Remove(entity);
+                    db.SaveChanges();
+                    MessageBox.Show("Xóa dữ liệu thành công!", "Chúc mừng", MessageBoxButtons.OK);
+                    refresh();
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Xóa thất bại", "Lỗi", MessageBoxButtons.OK);
+            }
+        }
 
 
         // Huong_code Hang hoa
