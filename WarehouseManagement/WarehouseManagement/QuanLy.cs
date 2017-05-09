@@ -178,6 +178,140 @@ namespace WarehouseManagement
             }
         }
 
+		private void btnThemHangXuat_Click(object sender, EventArgs e)
+        {
+            btnThemHangXuat.Enabled = true;
+            btnSuaHangXuat.Enabled = false;
+            btnXoaHangXuat.Enabled = false;
+            btnLuuHangXuat.Enabled = true;
+            btnHuyHangXuat.Enabled = true;
+
+            cbHangHoaXuat.Enabled = true;
+            txtSoLuongXuat.Enabled = true;
+            txtSoLuongXuat.Text = null;
+
+            selectedBill = null;
+        }
+
+        private void btnHuyHangXuat_Click(object sender, EventArgs e)
+        {
+            refresh();
+        }
+
+        private void dgvXuatHang_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            try
+            {
+                btnThemHangXuat.Enabled = true;
+                btnSuaHangXuat.Enabled = true;
+                btnXoaHangXuat.Enabled = true;
+                btnLuuHangXuat.Enabled = false;
+                btnHuyHangXuat.Enabled = false;
+
+                selectedBill = db.hang_xuat.Find(int.Parse(dgvXuatHang.CurrentRow.Cells["ma_xuat"].Value.ToString()));
+                cbHangHoaXuat.SelectedValue = selectedBill.ma_hang_hoa;
+                txtSoLuongXuat.Text = selectedBill.so_luong.ToString();
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Click chuột sai vị trí", "Lỗi", MessageBoxButtons.OK);
+            }
+        }
+
+        private void btnSuaHangXuat_Click(object sender, EventArgs e)
+        {
+            btnThemHangXuat.Enabled = false;
+            btnSuaHangXuat.Enabled = true;
+            btnXoaHangXuat.Enabled = false;
+            btnLuuHangXuat.Enabled = true;
+            btnHuyHangXuat.Enabled = true;
+
+            cbHangHoaXuat.Enabled = true;
+            txtSoLuongXuat.Enabled = true;
+        }
+
+        private void btnXoaHangXuat_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (MessageBox.Show(null, "Bạn có chắc chắn muốn xóa không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
+                {
+                    db.hang_xuat.Remove(selectedBill);
+                    db.SaveChanges();
+                    MessageBox.Show("Xóa dữ liệu thành công!", "Chúc mừng", MessageBoxButtons.OK);
+                    refresh();
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Xóa thất bại", "Lỗi", MessageBoxButtons.OK);
+            }
+        }
+
+        private void btnLuuHangXuat_Click(object sender, EventArgs e)
+        {
+            if (txtSoLuongXuat.Value <= 0)
+            {
+                MessageBox.Show("Số lượng phải là số nguyên dương!", "Thông báo", MessageBoxButtons.OK);
+                return;
+            }
+            if (selectedBill == null)
+            {
+                hang_hoa product = db.hang_hoa.Find(int.Parse(cbHangHoaXuat.SelectedValue.ToString()));
+                if (txtSoLuongXuat.Value > product.so_luong)
+                {
+                    MessageBox.Show("Hàng hóa trong kho không đủ để xuất!", "Thông báo", MessageBoxButtons.OK);
+                    return;
+                }
+                hang_xuat entity = new hang_xuat();
+                entity.ngay_xuat = DateTime.Now;
+                entity.don_gia = product.don_gia;
+                entity.so_luong = txtSoLuongXuat.Value;
+                entity.ma_hang_hoa = product.ma_hang_hoa;
+                db.hang_xuat.Add(entity);
+                db.SaveChanges();
+                //Cập nhật số lượng hàng hóa
+                product.so_luong -= entity.so_luong;
+                db.SaveChanges();
+                MessageBox.Show("Thêm dữ liệu thành công!", "Thông báo", MessageBoxButtons.OK);
+            }
+            else
+            {
+                hang_hoa product = db.hang_hoa.Find(int.Parse(cbHangHoaXuat.SelectedValue.ToString()));
+                if (txtSoLuongXuat.Value > product.so_luong)
+                {
+                    MessageBox.Show("Hàng hóa trong kho không đủ để xuất!", "Thông báo", MessageBoxButtons.OK);
+                    return;
+                }
+                //Cập nhật số lượng hàng hóa
+                product.so_luong = product.so_luong + selectedBill.so_luong - txtSoLuongXuat.Value;
+                db.SaveChanges();
+                selectedBill.ngay_xuat = DateTime.Now;
+                selectedBill.don_gia = product.don_gia;
+                selectedBill.so_luong = txtSoLuongXuat.Value;
+                db.SaveChanges();
+                MessageBox.Show("Sửa dữ liệu thành công!", "Thông báo", MessageBoxButtons.OK);
+            }
+            refresh();
+        }
+
+        private void dgvXuatHang_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (this.dgvXuatHang.Columns[e.ColumnIndex].Name == "tong_tien_xuat")
+            {
+                e.Value = double.Parse(dgvXuatHang.Rows[e.RowIndex].Cells["gia_xuat"].Value.ToString()) * int.Parse(dgvXuatHang.Rows[e.RowIndex].Cells["so_luong_xuat"].Value.ToString());
+                e.Value = String.Format("{0:0,0}", e.Value);
+            }
+            if (this.dgvXuatHang.Columns[e.ColumnIndex].Name == "gia_xuat")
+            {
+                e.Value = String.Format("{0:0,0}", e.Value);
+            }
+            if (this.dgvXuatHang.Columns[e.ColumnIndex].Name == "ma_hang_hoa_xuat")
+            {
+                e.Value = db.hang_hoa.Find(e.Value).ten_hang_hoa;
+            }
+        }
 
         // Huong_code Hang hoa
         public void loadHangHoa()
